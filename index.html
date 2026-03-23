@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Love Card</title>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top, #1a001a, #000000);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 40px rgba(255, 105, 180, 0.3);
+      z-index: 2;
+    }
+
+    button {
+      padding: 15px 35px;
+      font-size: 18px;
+      background: linear-gradient(45deg, #ff4da6, #ff99cc);
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+    }
+
+    #message {
+      margin-top: 25px;
+      font-size: 20px;
+      color: #ffd6ec;
+      min-height: 60px;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -50px;
+      font-size: 20px;
+      color: pink;
+      animation: floatUp linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      to {
+        transform: translateY(-110vh);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <button onclick="showMessage()">click bka</button>
+
+    <div id="message"></div>
+  </div>
+
+  <!-- Music -->
+  <audio id="music" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const text = "hi linnn linnn how was ur day ? \n\ninshallahhhh zor bash bubi 💖";
+    let index = 0;
+
+    function showMessage() {
+      document.getElementById("music").play();
+      typeWriter();
+    }
+
+    function typeWriter() {
+      if (index < text.length) {
+        document.getElementById("message").innerHTML += 
+          text.charAt(index) === "\n" ? "<br>" : text.charAt(index);
+        index++;
+        setTimeout(typeWriter, 50);
+      }
+    }
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤";
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+      heart.style.fontSize = (15 + Math.random() * 20) + "px";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 8000);
+    }
+
+    setInterval(createHeart, 300);
+  </script>
+
+</body>
+</html>
