@@ -16,7 +16,6 @@ body {
   align-items: center;
 }
 
-/* Card */
 .card {
   background: rgba(255,255,255,0.08);
   border-radius: 25px;
@@ -27,7 +26,6 @@ body {
   animation: fadeIn 1.5s ease;
 }
 
-/* Button */
 button {
   padding: 15px 35px;
   font-size: 18px;
@@ -45,7 +43,6 @@ button:hover {
   box-shadow: 0 0 25px #ff66b2;
 }
 
-/* Message */
 #message {
   margin-top: 25px;
   font-size: 20px;
@@ -54,14 +51,12 @@ button:hover {
   line-height: 1.6;
 }
 
-/* Music Button */
 .music-btn {
   margin-top: 15px;
   background: transparent;
   border: 2px solid #ff66b2;
 }
 
-/* Floating Hearts */
 .heart {
   position: absolute;
   bottom: -50px;
@@ -75,7 +70,6 @@ button:hover {
   }
 }
 
-/* Fade */
 @keyframes fadeIn {
   from {opacity: 0; transform: scale(0.8);}
   to {opacity: 1; transform: scale(1);}
@@ -88,13 +82,9 @@ button:hover {
 <div class="card">
   <button onclick="startLove()">Click Me 💖</button>
   <br>
-  <button class="music-btn" onclick="toggleMusic()">🎵 Music</button>
+  <button class="music-btn" onclick="openMusic()">click me and relax 💖</button>
   <div id="message"></div>
 </div>
-
-<audio id="music" loop>
-  <source src="https://youtu.be/nmWXjWI3sZU?si=pL3ClYpKMe4njgjx">
-</audio>
 
 <script>
 const messages = [
@@ -114,7 +104,6 @@ function startLove() {
   document.getElementById("message").innerHTML = "";
   typeWriter();
   burstHearts();
-  document.getElementById("music").play();
 }
 
 /* Typewriter */
@@ -127,14 +116,9 @@ function typeWriter() {
   }
 }
 
-/* Music toggle */
-function toggleMusic() {
-  const music = document.getElementById("music");
-  if (music.paused) {
-    music.play();
-  } else {
-    music.pause();
-  }
+/* 🎵 Open YouTube */
+function openMusic() {
+  window.open("https://youtu.be/nmWXjWI3sZU", "_blank");
 }
 
 /* Floating hearts */
