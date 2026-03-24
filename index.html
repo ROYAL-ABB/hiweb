@@ -9,7 +9,11 @@ body {
   margin: 0;
   overflow: hidden;
   font-family: 'Segoe UI', sans-serif;
-  background: radial-gradient(circle at top, #1a001a, #000000);
+
+  background: radial-gradient(circle at 20% 20%, rgba(255, 105, 180, 0.15), transparent 40%),
+              radial-gradient(circle at 80% 30%, rgba(255, 20, 147, 0.12), transparent 40%),
+              radial-gradient(circle at bottom, #2b0033, #000000);
+
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -17,62 +21,51 @@ body {
 }
 
 .card {
-  background: rgba(255,255,255,0.08);
-  border-radius: 25px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 30px;
   padding: 50px;
   text-align: center;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 0 60px rgba(255,105,180,0.4);
-  animation: fadeIn 1.5s ease;
+  backdrop-filter: blur(25px);
+  box-shadow: 0 0 80px rgba(255,105,180,0.25);
 }
 
 button {
-  padding: 15px 35px;
-  font-size: 18px;
+  padding: 12px 25px;
+  font-size: 16px;
   background: linear-gradient(45deg, #ff4da6, #ff99cc);
   border: none;
   border-radius: 30px;
   cursor: pointer;
   color: white;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 25px #ff66b2;
+  margin: 5px;
+  transition: 0.2s;
 }
 
 #message {
-  margin-top: 25px;
-  font-size: 20px;
+  margin-top: 20px;
   color: #ffd6ec;
-  min-height: 80px;
-  line-height: 1.6;
 }
 
 .music-btn {
-  margin-top: 15px;
+  margin-top: 10px;
   background: transparent;
   border: 2px solid #ff66b2;
 }
 
-.heart {
-  position: absolute;
-  bottom: -50px;
-  animation: floatUp linear infinite;
-  opacity: 0.8;
+#question {
+  margin-top: 20px;
+  color: #fff;
+  font-size: 18px;
 }
 
-@keyframes floatUp {
-  to {
-    transform: translateY(-110vh);
-  }
+#answers {
+  margin-top: 10px;
 }
 
-@keyframes fadeIn {
-  from {opacity: 0; transform: scale(0.8);}
-  to {opacity: 1; transform: scale(1);}
+#response {
+  margin-top: 15px;
+  color: #ffd6ec;
+  font-size: 18px;
 }
 </style>
 </head>
@@ -83,7 +76,19 @@ button:hover {
   <button onclick="startLove()">Click Me 💖</button>
   <br>
   <button class="music-btn" onclick="openMusic()">click me and relax 💖</button>
+
   <div id="message"></div>
+
+  <div id="question">
+    <p>Did I match your sweetness level?</p>
+
+    <div id="answers">
+      <button id="yesBtn" onclick="moveYes()">Yes</button>
+      <button onclick="noClicked()">No</button>
+    </div>
+
+    <div id="response"></div>
+  </div>
 </div>
 
 <script>
@@ -94,16 +99,14 @@ const messages = [
 let text = "";
 let index = 0;
 
-/* Start */
 function startLove() {
-  text = messages[Math.floor(Math.random() * messages.length)];
+  text = messages[0];
   index = 0;
   document.getElementById("message").innerHTML = "";
   typeWriter();
   burstHearts();
 }
 
-/* Typewriter */
 function typeWriter() {
   if (index < text.length) {
     document.getElementById("message").innerHTML += 
@@ -113,31 +116,42 @@ function typeWriter() {
   }
 }
 
-/* 🎵 Open YouTube */
 function openMusic() {
   window.open("https://youtu.be/ztmhivIdpQw?si=Cg_5UqEprFjVSozY", "_blank");
 }
 
-/* Floating hearts */
+/* YES moves when clicked */
+function moveYes() {
+  const btn = document.getElementById("yesBtn");
+
+  const x = (Math.random() - 0.5) * 300;
+  const y = (Math.random() - 0.5) * 300;
+
+  btn.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+/* NO shows message under buttons */
+function noClicked() {
+  document.getElementById("response").innerHTML =
+  "yes i didn't because you are the only one who got this level of sweetness 💖";
+}
+
+/* floating hearts */
 function createHeart() {
   const heart = document.createElement("div");
-  heart.classList.add("heart");
-
-  const hearts = ["💖","💕","💘","❤️"];
-  heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
-
+  heart.innerHTML = "💖";
+  heart.style.position = "absolute";
+  heart.style.bottom = "-50px";
   heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animation = "floatUp linear";
   heart.style.animationDuration = (4 + Math.random() * 4) + "s";
-  heart.style.fontSize = (15 + Math.random() * 25) + "px";
 
   document.body.appendChild(heart);
-
   setTimeout(() => heart.remove(), 8000);
 }
 
-setInterval(createHeart, 250);
+setInterval(createHeart, 300);
 
-/* Click burst effect */
 function burstHearts() {
   for (let i = 0; i < 20; i++) {
     const heart = document.createElement("div");
@@ -145,7 +159,6 @@ function burstHearts() {
     heart.style.position = "absolute";
     heart.style.left = "50%";
     heart.style.top = "50%";
-    heart.style.fontSize = "20px";
 
     const x = (Math.random() - 0.5) * 300;
     const y = (Math.random() - 0.5) * 300;
