@@ -1,114 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Love Card</title>
+<meta charset="UTF-8">
+<title>linnn 💖</title>
 
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      font-family: 'Segoe UI', sans-serif;
-      background: radial-gradient(circle at top, #1a001a, #000000);
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, #1a001a, #000000);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .card {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 20px;
-      padding: 40px;
-      text-align: center;
-      backdrop-filter: blur(15px);
-      box-shadow: 0 0 40px rgba(255, 105, 180, 0.3);
-      z-index: 2;
-    }
+/* Card */
+.card {
+  background: rgba(255,255,255,0.08);
+  border-radius: 25px;
+  padding: 50px;
+  text-align: center;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 60px rgba(255,105,180,0.4);
+  animation: fadeIn 1.5s ease;
+}
 
-    button {
-      padding: 15px 35px;
-      font-size: 18px;
-      background: linear-gradient(45deg, #ff4da6, #ff99cc);
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      color: white;
-      font-weight: bold;
-    }
+/* Button */
+button {
+  padding: 15px 35px;
+  font-size: 18px;
+  background: linear-gradient(45deg, #ff4da6, #ff99cc);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
+}
 
-    #message {
-      margin-top: 25px;
-      font-size: 20px;
-      color: #ffd6ec;
-      min-height: 60px;
-    }
+button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px #ff66b2;
+}
 
-    .heart {
-      position: absolute;
-      bottom: -50px;
-      font-size: 20px;
-      color: pink;
-      animation: floatUp linear infinite;
-      opacity: 0.7;
-    }
+/* Message */
+#message {
+  margin-top: 25px;
+  font-size: 20px;
+  color: #ffd6ec;
+  min-height: 80px;
+  line-height: 1.6;
+}
 
-    @keyframes floatUp {
-      to {
-        transform: translateY(-110vh);
-      }
-    }
-  </style>
+/* Music Button */
+.music-btn {
+  margin-top: 15px;
+  background: transparent;
+  border: 2px solid #ff66b2;
+}
+
+/* Floating Hearts */
+.heart {
+  position: absolute;
+  bottom: -50px;
+  animation: floatUp linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-110vh);
+  }
+}
+
+/* Fade */
+@keyframes fadeIn {
+  from {opacity: 0; transform: scale(0.8);}
+  to {opacity: 1; transform: scale(1);}
+}
+</style>
 </head>
+
 <body>
 
-  <div class="card">
-    <button onclick="showMessage()">click bka</button>
+<div class="card">
+  <button onclick="startLove()">Click Me 💖</button>
+  <br>
+  <button class="music-btn" onclick="toggleMusic()">🎵 Music</button>
+  <div id="message"></div>
+</div>
 
-    <div id="message"></div>
-  </div>
+<audio id="music" loop>
+  <source src="https://youtu.be/nmWXjWI3sZU?si=pL3ClYpKMe4njgjx">
+</audio>
 
-  <!-- Music -->
-  <audio id="music" loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
-  </audio>
+<script>
+const messages = [
+"Hi Linnn 💖\n\nHow was your day?\nI hope it was beautiful 🌸",
+"You know something? 💕\n\nYou make everything better ✨",
+"I just wanted to say...\n\nYou're really special to me 💘",
+"i will try my best just to make you 💖\n\nAlways smile 😊"
+];
 
-  <script>
-    const text = "hi linnn linnn how was ur day ? \n\ninshallahhhh zor bash bubi 💖";
-    let index = 0;
+let text = "";
+let index = 0;
 
-    function showMessage() {
-      document.getElementById("music").play();
-      typeWriter();
-    }
+/* Start */
+function startLove() {
+  text = messages[Math.floor(Math.random() * messages.length)];
+  index = 0;
+  document.getElementById("message").innerHTML = "";
+  typeWriter();
+  burstHearts();
+  document.getElementById("music").play();
+}
 
-    function typeWriter() {
-      if (index < text.length) {
-        document.getElementById("message").innerHTML += 
-          text.charAt(index) === "\n" ? "<br>" : text.charAt(index);
-        index++;
-        setTimeout(typeWriter, 50);
-      }
-    }
+/* Typewriter */
+function typeWriter() {
+  if (index < text.length) {
+    document.getElementById("message").innerHTML += 
+      text.charAt(index) === "\n" ? "<br>" : text.charAt(index);
+    index++;
+    setTimeout(typeWriter, 40);
+  }
+}
 
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.innerHTML = "❤";
+/* Music toggle */
+function toggleMusic() {
+  const music = document.getElementById("music");
+  if (music.paused) {
+    music.play();
+  } else {
+    music.pause();
+  }
+}
 
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = (4 + Math.random() * 4) + "s";
-      heart.style.fontSize = (15 + Math.random() * 20) + "px";
+/* Floating hearts */
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
 
-      document.body.appendChild(heart);
+  const hearts = ["💖","💕","💘","❤️"];
+  heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
 
-      setTimeout(() => {
-        heart.remove();
-      }, 8000);
-    }
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+  heart.style.fontSize = (15 + Math.random() * 25) + "px";
 
-    setInterval(createHeart, 300);
-  </script>
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 8000);
+}
+
+setInterval(createHeart, 250);
+
+/* Click burst effect */
+function burstHearts() {
+  for (let i = 0; i < 20; i++) {
+    const heart = document.createElement("div");
+    heart.innerHTML = "💖";
+    heart.style.position = "absolute";
+    heart.style.left = "50%";
+    heart.style.top = "50%";
+    heart.style.fontSize = "20px";
+
+    const x = (Math.random() - 0.5) * 300;
+    const y = (Math.random() - 0.5) * 300;
+
+    heart.style.transition = "1s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+      heart.style.transform = `translate(${x}px, ${y}px)`;
+      heart.style.opacity = 0;
+    }, 10);
+
+    setTimeout(() => heart.remove(), 1000);
+  }
+}
+</script>
 
 </body>
 </html>
