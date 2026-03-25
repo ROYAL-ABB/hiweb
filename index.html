@@ -38,7 +38,11 @@ button {
   cursor: pointer;
   color: white;
   margin: 5px;
-  transition: 0.2s;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
 }
 
 #message {
@@ -46,20 +50,15 @@ button {
   color: #ffd6ec;
 }
 
-.music-btn {
-  margin-top: 10px;
-  background: transparent;
-  border: 2px solid #ff66b2;
-}
-
 #question {
-  margin-top: 20px;
+  margin-top: 25px;
   color: #fff;
-  font-size: 18px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 #answers {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 #response {
@@ -67,24 +66,30 @@ button {
   color: #ffd6ec;
   font-size: 18px;
 }
+
+/* floating hearts */
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-120vh); opacity: 0; }
+}
 </style>
 </head>
 
 <body>
 
 <div class="card">
-  <button onclick="startLove()">Click Me 💖</button>
-  <br>
-  <button class="music-btn" onclick="openMusic()">click me and relax 💖</button>
+  <button onclick="startLove()">New Message 💖</button>
 
   <div id="message"></div>
 
   <div id="question">
-    <p>Did I match your sweetness level?</p>
+    <p>Be honest... who's more beautiful✨</p>
 
     <div id="answers">
-      <button id="yesBtn" onclick="moveYes()">Yes</button>
-      <button onclick="noClicked()">No</button>
+      <button onclick="wrongAnswer()">Leah Halton</button>
+      <button onclick="wrongAnswer()">Madison Beer</button>
+      <button onclick="correctAnswer()">LINNN 💖</button>
+      <button onclick="wrongAnswer()">Angelina Jolie</button>
     </div>
 
     <div id="response"></div>
@@ -93,12 +98,13 @@ button {
 
 <script>
 const messages = [
-"Heyyyy the mosttt beautiful girlll\n\ngood morning , andd hope you have a great day ♥️"
+"Heyyyy the mosttt beautiful girlll 💖\n\nGood morning ☀️\nI hope your day is as amazing as your smile… and honestly, even better because you deserve it ♥️"
 ];
 
 let text = "";
 let index = 0;
 
+/* start */
 function startLove() {
   text = messages[0];
   index = 0;
@@ -107,6 +113,7 @@ function startLove() {
   burstHearts();
 }
 
+/* typing effect */
 function typeWriter() {
   if (index < text.length) {
     document.getElementById("message").innerHTML += 
@@ -116,24 +123,17 @@ function typeWriter() {
   }
 }
 
-function openMusic() {
-  window.open("https://youtu.be/ztmhivIdpQw?si=Cg_5UqEprFjVSozY", "_blank");
-}
-
-/* YES moves when clicked */
-function moveYes() {
-  const btn = document.getElementById("yesBtn");
-
-  const x = (Math.random() - 0.5) * 300;
-  const y = (Math.random() - 0.5) * 300;
-
-  btn.style.transform = `translate(${x}px, ${y}px)`;
-}
-
-/* NO shows message under buttons */
-function noClicked() {
+/* correct answer */
+function correctAnswer() {
   document.getElementById("response").innerHTML =
-  "yes i didn't because you are the only one who got this level of sweetness 💖";
+  "YESSS CORRECT 😍💖<br>LINNN IS THE MOST BEAUTIFUL, CUTEST, SMARTEST, AND PRETTIEST GIRL EVERRR ✨💖";
+  burstHearts();
+}
+
+/* wrong answer */
+function wrongAnswer() {
+  document.getElementById("response").innerHTML =
+  "WHAT ??? 😡<br>Change your answer !!! Who can be prettier than LINNN ???? 💖";
 }
 
 /* floating hearts */
@@ -152,16 +152,17 @@ function createHeart() {
 
 setInterval(createHeart, 300);
 
+/* burst hearts */
 function burstHearts() {
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 25; i++) {
     const heart = document.createElement("div");
     heart.innerHTML = "💖";
     heart.style.position = "absolute";
     heart.style.left = "50%";
     heart.style.top = "50%";
 
-    const x = (Math.random() - 0.5) * 300;
-    const y = (Math.random() - 0.5) * 300;
+    const x = (Math.random() - 0.5) * 400;
+    const y = (Math.random() - 0.5) * 400;
 
     heart.style.transition = "1s";
     document.body.appendChild(heart);
